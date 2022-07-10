@@ -31,6 +31,21 @@ h1 {
     height: 118px;
     border-radius: 10px;
     margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.progress-num {
+    color: black;
+    margin-right: 10px;
+}
+
+.current-num {
+    color: black;
+    font-size: 58px;
+    margin-right: 10px;
 }
 
 .buttons {
@@ -86,7 +101,7 @@ button {
     gap: 20px;
 }
 
-#zeroBtn {
+#button0 {
     width: 180px;
 }
 

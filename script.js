@@ -9,6 +9,25 @@ let screen = document.createElement('div');
 screen.setAttribute("class", "screen");
 calculator.appendChild(screen);
 
+let progressNum = document.createElement('div');
+progressNum.setAttribute("class", "progress-num");
+progressNum.textContent = '88 +';
+screen.appendChild(progressNum);
+
+let currentNum = document.createElement('div');
+currentNum.setAttribute("class", "current-num");
+currentNum.textContent = '0';
+screen.appendChild(currentNum);
+
+function displayValue(value) {
+    console.log(value);
+    if (currentNum.textContent === '0') {
+        currentNum.textContent = `${value}`;
+    } else {
+        currentNum.textContent += `${value}`;
+    }
+}
+
 // BUTTONS
 let buttons = document.createElement('div');
 buttons.setAttribute("class", "buttons");
@@ -54,11 +73,14 @@ for (let i = 0; i < 3; i++) {
         let numBtn = document.createElement('button');
         numBtn.className = 'numBtn';
         if ( i === 0) {
+            numBtn.setAttribute("id", `button${j + 1}`);
             numBtn.textContent = `${j + 1}`;
         } else if (i === 1) {
-            numBtn.textContent = `${j + 3}`;
+            numBtn.setAttribute("id", `button${j + 4}`);
+            numBtn.textContent = `${j + 4}`;
         } else {
-            numBtn.textContent = `${j + 5}`;
+            numBtn.setAttribute("id", `button${j +7}`);
+            numBtn.textContent = `${j + 7}`;
         }
 
         row.appendChild(numBtn);
@@ -71,7 +93,7 @@ zeroAndDecimal.className = 'zero-decimal';
 leftBtns.appendChild(zeroAndDecimal)
 
 let zeroBtn = document.createElement('button');
-zeroBtn.setAttribute("id", "zeroBtn");
+zeroBtn.setAttribute("id", "button0");
 zeroBtn.textContent = '0';
 zeroAndDecimal.appendChild(zeroBtn);
 
@@ -109,3 +131,106 @@ let equalBtn = document.createElement('button');
 equalBtn.setAttribute("id", "equalBtn");
 equalBtn.textContent = '=';
 operators.appendChild(equalBtn);
+
+
+//  <--- Math Functions --->
+
+function add(num1, num2) {
+    return num1 + num2;
+}
+
+function subtract(num1, num2) {
+    return num1 - num2;
+}
+
+function multiply(num1, num2) {
+    return num1 * num2;
+}
+
+function divide(num1, num2) {
+    return num1 / num2;
+}
+
+// Create a new function operate that takes an operator and 2 numbers and then calls one of the above functions on the numbers.
+function operate(operator, num1, num2){
+    if (operator === plus) {
+        add(num1, num2);
+    };
+
+    if (operator === minus) {
+        subtract(num1, num2);
+    };
+
+    if (operator === plus) {
+        multiply(num1, num2);
+    };
+
+    if (operator === plus) {
+        divide(num1, num2);
+    };
+}
+
+//  CLICK EVENTS
+// <--- Numbers --->
+let setNum1 = document.querySelector('#button1');
+let setNum2 = document.querySelector('#button2');
+let setNum3 = document.querySelector('#button3');
+let setNum4 = document.querySelector('#button4');
+let setNum5 = document.querySelector('#button5');
+let setNum6 = document.querySelector('#button6');
+let setNum7 = document.querySelector('#button7');
+let setNum8 = document.querySelector('#button8');
+let setNum9 = document.querySelector('#button9');
+let setNum0 = document.querySelector('#button0');
+
+setNum1.addEventListener('click', () => {
+    displayValue(1);
+})
+
+setNum2.addEventListener('click', () => {
+    displayValue(2);
+})
+
+setNum3.addEventListener('click', () => {
+    displayValue(3);
+})
+
+setNum4.addEventListener('click', () => {
+    displayValue(4);
+})
+
+setNum5.addEventListener('click', () => {
+    displayValue(5);
+})
+
+setNum6.addEventListener('click', () => {
+    displayValue(6);
+})
+
+setNum7.addEventListener('click', () => {
+    displayValue(7);
+})
+
+setNum8.addEventListener('click', () => {
+    displayValue(8);
+})
+
+setNum9.addEventListener('click', () => {
+    displayValue(9);
+})
+
+setNum0.addEventListener('click', () => {
+    displayValue(0);
+})
+
+// <--- Options --->
+let setClear = document.querySelector('#clearBtn')
+
+setClear.addEventListener('click', () => {
+    currentNum.textContent = '0';
+});
+
+
+//  1. Append number for Current Number before operator
+//  2. Show total number above Current Number
+//  3. Give total after pressing Equal (=)
