@@ -1,5 +1,9 @@
 const mainContent = document.querySelector('#main-content');
 
+//  Total Value
+let previousValue = 0;
+let currentValue = 0;
+
 let calculator = document.createElement('div');
 calculator.setAttribute("class", "calculator");
 mainContent.appendChild(calculator);
@@ -9,23 +13,38 @@ let screen = document.createElement('div');
 screen.setAttribute("class", "screen");
 calculator.appendChild(screen);
 
-let progressNum = document.createElement('div');
-progressNum.setAttribute("class", "progress-num");
-progressNum.textContent = '88 +';
-screen.appendChild(progressNum);
+let previousNum = document.createElement('div');
+previousNum.setAttribute("class", "previous-num");
+previousNum.textContent = previousValue;
+screen.appendChild(previousNum);
 
 let currentNum = document.createElement('div');
 currentNum.setAttribute("class", "current-num");
-currentNum.textContent = '0';
+currentNum.textContent = currentValue;
 screen.appendChild(currentNum);
 
 function displayValue(value) {
-    console.log(value);
-    if (currentNum.textContent === '0') {
-        currentNum.textContent = `${value}`;
-    } else {
-        currentNum.textContent += `${value}`;
+    console.log('You\'ve entered ' + value);
+
+    //  Starting value - if Current Value is 0, change to typed number
+    //  Else, append number and the Current Value is that number
+    if (currentValue === 0) {
+        currentValue = value;
+        currentNum.textContent = value;
+    } else { 
+        currentNum.textContent += value;
+        currentValue = parseInt(currentNum.textContent);
     }
+
+    console.log(currentValue);
+    console.log(typeof currentValue);
+    // console.log(previousValue);
+}
+
+function displayPreviousValue(operator) {
+    console.log('You\'ve entered ' + operator);
+    previousNum.textContent = `${currentNum.textContent} ` + operator;
+    currentValue = 0;
 }
 
 // BUTTONS
@@ -114,7 +133,7 @@ operators.appendChild(divideBtn);
 
 let multiplyBtn = document.createElement('button');
 multiplyBtn.setAttribute("id", "multiplyBtn");
-multiplyBtn.textContent = 'x';
+multiplyBtn.textContent = '×';
 operators.appendChild(multiplyBtn);
 
 let minusBtn = document.createElement('button');
@@ -152,23 +171,27 @@ function divide(num1, num2) {
 }
 
 // Create a new function operate that takes an operator and 2 numbers and then calls one of the above functions on the numbers.
-function operate(operator, num1, num2){
+function operate(operator, previousNum, currentNum){
+    // recudce? accumulate previous and current number
+
     if (operator === plus) {
-        add(num1, num2);
+        add(previousNum, currentNum);
     };
 
     if (operator === minus) {
-        subtract(num1, num2);
+        subtract(previousNum, currentNum);
     };
 
-    if (operator === plus) {
-        multiply(num1, num2);
+    if (operator === multiplication) {
+        multiply(previousNum, currentNum);
     };
 
-    if (operator === plus) {
-        divide(num1, num2);
+    if (operator === division) {
+        divide(previousNum, currentNum);
     };
 }
+
+
 
 //  CLICK EVENTS
 // <--- Numbers --->
@@ -184,6 +207,7 @@ let setNum9 = document.querySelector('#button9');
 let setNum0 = document.querySelector('#button0');
 
 setNum1.addEventListener('click', () => {
+    // selection = setNum1.id;
     displayValue(1);
 })
 
@@ -227,9 +251,32 @@ setNum0.addEventListener('click', () => {
 let setClear = document.querySelector('#clearBtn')
 
 setClear.addEventListener('click', () => {
-    currentNum.textContent = '0';
+    previousValue = 0;
+    currentValue = 0;
 });
 
+// <--- Operators --->
+let setPlus = document.querySelector('#plusBtn');
+let setMinus = document.querySelector('#minusBtn');
+let setMultiply = document.querySelector('#multiplyBtn');
+let setDivide = document.querySelector('#divideBtn');
+let setEqual = document.querySelector('#equalBtn');
+
+setPlus.addEventListener('click', () => {
+    displayPreviousValue('+');
+})
+
+setMinus.addEventListener('click', () => {
+    displayPreviousValue('-');
+})
+
+setMultiply.addEventListener('click', () => {
+    displayPreviousValue('×');
+})
+
+setDivide.addEventListener('click', () => {
+    displayPreviousValue('÷');
+})
 
 //  1. Append number for Current Number before operator
 //  2. Show total number above Current Number
